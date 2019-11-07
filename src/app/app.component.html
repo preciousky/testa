@@ -3,32 +3,37 @@
             nzCollapsible
             nzWidth="256px"
             nzBreakpoint="md"
-            [(nzCollapsed)]="isCollapsed"
+            [nzCollapsed]="isCollapsed"
             [nzTrigger]="null">
     <div class="sidebar-logo">
-      <a href="https://ng.ant.design/" target="_blank">
+      <a  (click)="isCollapsed = !isCollapsed">
         <img src="https://ng.ant.design/assets/img/logo.svg" alt="logo">
+      </a>
+      <a routerLink="">
         <h1>See You Again</h1>
       </a>
     </div>
     <ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
-      <li nz-submenu nzOpen nzTitle="Users" nzIcon="dashboard">
+      <li nz-submenu nzOpen nzTitle="USERS" nzIcon="dashboard">
         <ul>
           <li nz-menu-item nzMatchRouter>
-            <a routerLink="login">Login</a>
+            <a routerLink="/login">LOG IN</a>
           </li>
           <li nz-menu-item nzMatchRouter>
-            <a>Logup</a>
-          </li>
-          <li nz-menu-item nzMatchRouter>
-            <a>UserInfo</a>
+            <a routerLink="/logup">LOG UP</a>
           </li>
         </ul>
       </li>
-      <li nz-submenu nzOpen nzTitle="Testament" nzIcon="form">
+      <li nz-submenu nzOpen nzTitle="TESTAMENT" nzIcon="form">
         <ul>
           <li nz-menu-item nzMatchRouter>
-            <a>Set A Testament</a>
+            <a [routerLink]="['/update']" [queryParams]="{idNum: this.idNum}">UPDATE CONTRACT</a>
+          </li>
+          <li nz-menu-item nzMatchRouter>
+            <a [routerLink]="['/list']" [queryParams]="{idNum: this.idNum}">CONTRACT LIST</a>
+          </li>
+          <li nz-menu-item nzMatchRouter>
+            <a routerLink="/certification">DEATH CERTIFICATION</a>
           </li>
         </ul>
       </li>
@@ -36,13 +41,14 @@
   </nz-sider>
   <nz-layout>
     <nz-header>
-      <div class="app-header">
-        <span class="header-trigger" (click)="isCollapsed = !isCollapsed">
-            <i class="trigger"
-               nz-icon
-               [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
-            ></i>
-        </span>
+      <div class="app-header" style="padding-left: 24px; font-size: large; font-weight: 700;">
+<!--        <span class="header-trigger" (click)="isCollapsed = !isCollapsed">-->
+<!--            <i class="trigger"-->
+<!--               nz-icon-->
+<!--               [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"-->
+<!--            ></i>-->
+<!--        </span>-->
+        {{this.idNum}}
       </div>
     </nz-header>
     <nz-content>

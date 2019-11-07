@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {HttpService} from '../service/http.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {ShareService} from "../service/share.service";
 
 @Component({
   selector: 'app-login',
@@ -9,22 +10,20 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  testString: string;
   validateForm: FormGroup;
-
   constructor(
     private router: Router,
     private httpService: HttpService,
-    private fb: FormBuilder) {
+    private fb: FormBuilder,
+    private shareService: ShareService) {
   }
 
   ngOnInit(): void {
     this.validateForm = this.fb.group({
-      userName: [null, [Validators.required]],
-      password: [null, [Validators.required]],
+      idNum: [null, [Validators.required]],
+      psw: [null, [Validators.required]],
       remember: [true]
     });
-    this.testString = 'testing...';
   }
 
   login(): void {
@@ -33,14 +32,22 @@ export class LoginComponent implements OnInit {
       this.validateForm.controls[i].updateValueAndValidity();
     }
     var body = JSON.stringify({
-      "test": 'test'
+      "idNum": this.validateForm.value.idNum,
+      "psw": this.validateForm.value.psw
     });
-    this.httpService.postData('login/', body)
+    this.httpService.postData('userAccount/login', body)
       .subscribe(data => {
           console.log('>>>>>>>>>>>>  received data >>>>>>>>>>>>>>>>>>>');
           console.log(data);
-          if (data['code'] != null) {
-            this.testString = "test successfully!!!"
+          if (data['code'] == "1") {
+            var emitBody = JSON.stringify({
+              "idNum": this.validateForm.value.idNum,
+            });
+            this.shareService.emitChange(emitBody);
+            this.router.navigate(['/home']);
+          }
+          else{
+
           }
           console.log('######################link finish############################');
         },

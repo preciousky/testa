@@ -7,7 +7,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 
 export class HttpService {
   // serverIP='http://192.168.43.215:8000/';
-  serverIP = 'http://localhost:4200/';
+  serverIP = 'http://192.168.43.78:4200/';
 
   constructor(private http: HttpClient) {
   }
@@ -20,6 +20,7 @@ export class HttpService {
     console.log('=========Data response from server============');
     //下行用于mock data的连接，向服务器连接时注释掉下行即可
     // return this.http.get('assets/mock/'+url+'.json');
+    // return this.http.get('assets/mock/'+url.split("/")[0]+'.json');
     const httpOptions = {
       headers: new HttpHeaders({
         // 'Content-Type':'text/plain'
